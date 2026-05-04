@@ -4,12 +4,14 @@ const helmet = require('helmet');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
-
 const apiRoutes = require('./routes/api');
 const adminRoutes = require('./routes/admin');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// ── TRUST PROXY (Railway) ──
+app.set('trust proxy', 1);
 
 // ── SEGURIDAD ──
 app.use(helmet({
@@ -33,26 +35,26 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Rate limiting — protege contra ataques de fuerza bruta
+// Rate limiting
 const generalLimit = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutos
+  windowMs: 15 * 60 * 1000,
   max: 100,
   message: { error: 'Demasiadas peticiones, esperá un momento' }
 });
 
 const loginLimit = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 10, // máximo 10 intentos de login por 15 min
+  max: 10,
   message: { error: 'Demasiados intentos de login' }
 });
 
 const submitLimit = rateLimit({
-  windowMs: 60 * 60 * 1000, // 1 hora
-  max: 5, // máximo 5 postulaciones por hora por IP
+  windowMs: 60 * 60 * 1000,
+  max: 5,
   message: { error: 'Demasiadas postulaciones desde esta IP' }
 });
 
-app.use(express.json({ limit: '10kb' })); // Límite de payload
+app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: false }));
 
 // ── STATIC FILES ──
@@ -67,7 +69,7 @@ app.use('/api/admin/login', loginLimit);
 app.use('/api/admin/applications', submitLimit);
 app.use('/api/admin', adminRoutes);
 
-// ── HEALTH CHECK (Railway lo usa) ──
+// ── HEALTH CHECK ──
 app.get('/health', (req, res) => res.json({ status: 'ok', uptime: process.uptime() }));
 
 // ── FALLBACK → index.html ──
