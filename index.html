@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KOP Producciones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #CC0000; --red-bright: #FF1A1A; --red-dark: #8B0000;
+    --white: #F5F0F0; --black: #0A0A0A; --gray: #1A1A1A; --gray2: #2A2A2A;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
+
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.4;
+  }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; padding: 2rem; text-align: center; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(180,0,0,0.18) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 80% 80%, rgba(120,0,0,0.12) 0%, transparent 60%), var(--black); }
+  .hero-lines { position: absolute; inset: 0; background-image: repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(200,0,0,0.04) 80px), repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(200,0,0,0.04) 80px); pointer-events: none; }
+  .spotlight { position: absolute; width: 2px; background: linear-gradient(to bottom, rgba(255,30,30,0.6), transparent); top: 0; animation: spotlight-swing 6s ease-in-out infinite; transform-origin: top center; }
+  .spotlight-1 { left: 25%; height: 60vh; animation-delay: 0s; }
+  .spotlight-2 { left: 75%; height: 55vh; animation-delay: -3s; }
+  @keyframes spotlight-swing { 0%, 100% { transform: rotate(-8deg); opacity: 0.5; } 50% { transform: rotate(8deg); opacity: 1; } }
+
+  .hero-logo { position: relative; z-index: 2; margin-bottom: 1.5rem; animation: hero-in 1s cubic-bezier(.16,1,.3,1) both; }
+  .logo-ring { width: 140px; height: 140px; border-radius: 50%; background: linear-gradient(135deg, var(--red-dark), var(--black)); border: 3px solid var(--red); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 0 40px rgba(200,0,0,0.4), 0 0 80px rgba(200,0,0,0.15); position: relative; overflow: hidden; }
+  .logo-ring::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%); border-radius: 50%; }
+  .logo-k { font-family: 'Bebas Neue', sans-serif; font-size: 5rem; color: var(--white); text-shadow: 0 0 20px rgba(255,50,50,0.5); line-height: 1; letter-spacing: -2px; }
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 10vw, 7rem); letter-spacing: 4px; line-height: 0.9; position: relative; z-index: 2; animation: hero-in 1s .1s cubic-bezier(.16,1,.3,1) both; }
+  .hero-title .kop { color: var(--red-bright); display: block; text-shadow: 0 0 40px rgba(255,26,26,0.5); }
+  .hero-title .prod { color: var(--white); display: block; font-size: 0.45em; letter-spacing: 12px; opacity: 0.9; }
+  .hero-sub { margin-top: 1.2rem; font-size: 0.85rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: rgba(245,240,240,0.5); position: relative; z-index: 2; animation: hero-in 1s .2s cubic-bezier(.16,1,.3,1) both; }
+  .hero-divider { width: 80px; height: 2px; background: linear-gradient(90deg, transparent, var(--red), transparent); margin: 1.5rem auto; position: relative; z-index: 2; animation: hero-in 1s .3s cubic-bezier(.16,1,.3,1) both; }
+  @keyframes hero-in { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* SOCIAL */
+  .social-section { position: relative; z-index: 2; animation: hero-in 1s .4s cubic-bezier(.16,1,.3,1) both; display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center; margin-top: 0.5rem; }
+  .social-btn { display: flex; align-items: center; gap: 0.6rem; padding: 0.75rem 1.4rem; border-radius: 4px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; text-decoration: none; transition: all 0.25s cubic-bezier(.16,1,.3,1); position: relative; overflow: hidden; cursor: pointer; }
+  .social-btn::before { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.05); transform: translateX(-100%); transition: transform 0.3s ease; }
+  .social-btn:hover::before { transform: translateX(0); }
+  .social-btn-discord { background: rgba(88,101,242,0.15); border: 1.5px solid #5865F2; color: #8891f5; }
+  .social-btn-discord:hover { background: rgba(88,101,242,0.3); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(88,101,242,0.3); color: #fff; }
+  .social-btn-tiktok { background: rgba(255,0,80,0.1); border: 1.5px solid rgba(255,0,80,0.5); color: #ff6b9d; }
+  .social-btn-tiktok:hover { background: rgba(255,0,80,0.25); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255,0,80,0.25); color: #fff; }
+  .social-btn-instagram { background: rgba(225,48,108,0.1); border: 1.5px solid rgba(225,48,108,0.5); color: #e1306c; }
+  .social-btn-instagram:hover { background: rgba(225,48,108,0.25); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(225,48,108,0.25); color: #fff; }
+  .social-btn-whatsapp { background: rgba(37,211,102,0.1); border: 1.5px solid rgba(37,211,102,0.5); color: #25d366; }
+  .social-btn-whatsapp:hover { background: rgba(37,211,102,0.25); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(37,211,102,0.25); color: #fff; }
+  .social-icon { width: 20px; height: 20px; flex-shrink: 0; }
+  .scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 0.4rem; opacity: 0.4; font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; animation: bounce 2s ease-in-out infinite; }
+  @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+
+  /* SECTIONS */
+  section { padding: 5rem 1.5rem; max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 5px; text-transform: uppercase; color: var(--red); margin-bottom: 0.6rem; }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 6vw, 4rem); letter-spacing: 2px; line-height: 1; color: var(--white); margin-bottom: 2rem; }
+  .section-divider { width: 50px; height: 3px; background: var(--red); margin-bottom: 2.5rem; }
+  .separator { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(200,0,0,0.3), transparent); margin: 0 auto; max-width: 900px; }
+
+  /* ABOUT */
+  .about-section { position: relative; }
+  .about-section::before { content: ''; position: absolute; left: -1.5rem; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--red-dark), transparent); }
+  .about-main { font-size: 1rem; line-height: 1.8; color: rgba(245,240,240,0.75); margin-bottom: 2rem; }
+  .about-main strong { color: var(--red-bright); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 2rem; }
+  .about-card { background: var(--gray); border: 1px solid rgba(200,0,0,0.15); border-radius: 6px; padding: 1.5rem; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; }
+  .about-card:hover { border-color: rgba(200,0,0,0.5); transform: translateY(-4px); }
+  .about-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--red-dark), var(--red-bright), var(--red-dark)); opacity: 0; transition: opacity 0.3s; }
+  .about-card:hover::before { opacity: 1; }
+  .card-number { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: rgba(200,0,0,0.15); line-height: 1; margin-bottom: 0.4rem; }
+  .card-title { font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; color: var(--white); margin-bottom: 0.5rem; }
+  .card-text { font-size: 0.8rem; line-height: 1.6; color: rgba(245,240,240,0.6); }
+
+  /* POSTULACIONES */
+  .apply-wrapper { background: var(--gray); border: 1px solid rgba(200,0,0,0.2); border-radius: 8px; overflow: hidden; }
+  .apply-header { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2rem; cursor: pointer; user-select: none; transition: background 0.2s; }
+  .apply-header:hover { background: rgba(200,0,0,0.05); }
+  .apply-header-left { display: flex; align-items: center; gap: 1rem; }
+  .apply-status { display: flex; align-items: center; gap: 0.5rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .status-open .status-dot { background: #00ff88; box-shadow: 0 0 8px #00ff88; animation: pulse-dot 2s ease-in-out infinite; }
+  .status-closed .status-dot { background: #666; }
+  .status-open { color: #00ff88; } .status-closed { color: #666; }
+  @keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.3); } }
+  .apply-toggle-icon { width: 28px; height: 28px; border: 1.5px solid rgba(200,0,0,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: transform 0.3s, border-color 0.3s; flex-shrink: 0; }
+  .apply-header.open .apply-toggle-icon { transform: rotate(180deg); border-color: var(--red); }
+  .apply-content { max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(.16,1,.3,1); }
+  .apply-content.open { max-height: 1200px; }
+  .apply-inner { padding: 0 2rem 2rem; }
+  .apply-text { font-size: 0.9rem; line-height: 1.7; color: rgba(245,240,240,0.7); margin-bottom: 1.5rem; }
+  .roles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.8rem; margin-bottom: 1.8rem; }
+  .role-tag { background: rgba(200,0,0,0.08); border: 1px solid rgba(200,0,0,0.25); border-radius: 4px; padding: 0.7rem 1rem; font-size: 0.78rem; font-weight: 600; color: rgba(245,240,240,0.8); display: flex; align-items: center; gap: 0.5rem; }
+  .role-dot { width: 6px; height: 6px; background: var(--red); border-radius: 50%; flex-shrink: 0; }
+  .apply-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group label { font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(245,240,240,0.5); }
+  .form-group input, .form-group select, .form-group textarea { background: var(--gray2); border: 1px solid rgba(200,0,0,0.2); border-radius: 4px; padding: 0.75rem 1rem; color: var(--white); font-family: 'Montserrat', sans-serif; font-size: 0.85rem; transition: border-color 0.2s; outline: none; -webkit-appearance: none; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--red); }
+  .form-group select option { background: var(--gray); }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .btn-submit { background: var(--red); color: var(--white); border: none; border-radius: 4px; padding: 1rem 2rem; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.25s; align-self: flex-start; }
+  .btn-submit:hover:not(:disabled) { background: var(--red-bright); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(200,0,0,0.4); }
+  .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+  .closed-msg { text-align: center; padding: 2rem; color: rgba(245,240,240,0.35); font-size: 0.85rem; font-style: italic; }
+  .form-msg { font-size: 0.82rem; padding: 0.7rem 1rem; border-radius: 4px; margin-top: 0.5rem; }
+  .form-msg.success { background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.3); color: #00ff88; }
+  .form-msg.error { background: rgba(200,0,0,0.08); border: 1px solid rgba(200,0,0,0.3); color: #ff6666; }
+
+  /* ACTIVIDADES */
+  .activity-tabs { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+  .tab-btn { padding: 0.5rem 1.2rem; border-radius: 3px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; border: 1.5px solid rgba(200,0,0,0.25); background: transparent; color: rgba(245,240,240,0.5); transition: all 0.2s; }
+  .tab-btn.active, .tab-btn:hover { background: var(--red); border-color: var(--red); color: var(--white); }
+  .activity-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
+  .activity-card { background: var(--gray); border: 1px solid rgba(200,0,0,0.15); border-radius: 8px; overflow: hidden; transition: transform 0.3s, border-color 0.3s; display: none; }
+  .activity-card.visible { display: block; }
+  .activity-card:hover { transform: translateY(-5px); border-color: rgba(200,0,0,0.45); }
+  .activity-card-top { padding: 1.5rem; border-bottom: 1px solid rgba(200,0,0,0.1); position: relative; }
+  .activity-type { font-size: 0.65rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 0.4rem; }
+  .activity-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 1px; color: var(--white); }
+  .activity-badge { position: absolute; top: 1rem; right: 1rem; font-size: 0.6rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 0.3rem 0.7rem; border-radius: 2px; }
+  .badge-active { background: rgba(0,255,136,0.1); border: 1px solid rgba(0,255,136,0.4); color: #00ff88; }
+  .badge-soon { background: rgba(255,165,0,0.1); border: 1px solid rgba(255,165,0,0.4); color: orange; }
+  .activity-card-bottom { padding: 1rem 1.5rem; }
+  .activity-desc { font-size: 0.78rem; color: rgba(245,240,240,0.55); line-height: 1.5; }
+  .activity-action { display: inline-block; margin-top: 0.8rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--red); text-decoration: none; cursor: pointer; transition: color 0.2s; }
+  .activity-action:hover { color: var(--red-bright); }
+
+  /* MODAL */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 1rem; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal { background: var(--gray); border: 1px solid rgba(200,0,0,0.3); border-radius: 10px; padding: 2rem; max-width: 480px; width: 100%; transform: scale(0.95); transition: transform 0.3s; position: relative; max-height: 90vh; overflow-y: auto; }
+  .modal-overlay.open .modal { transform: scale(1); }
+  .modal-close { position: absolute; top: 1rem; right: 1rem; width: 32px; height: 32px; border: 1px solid rgba(200,0,0,0.3); border-radius: 50%; background: transparent; color: rgba(245,240,240,0.5); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.2s; }
+  .modal-close:hover { background: rgba(200,0,0,0.2); color: var(--white); }
+  .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 2px; margin-bottom: 0.5rem; color: var(--white); }
+  .modal-sub { font-size: 0.8rem; color: rgba(245,240,240,0.5); margin-bottom: 1.5rem; line-height: 1.5; }
+
+  /* SORTEO */
+  .entry-input-row { display: flex; gap: 0.5rem; margin-bottom: 0.8rem; }
+  .entry-input { flex: 1; background: var(--gray2); border: 1px solid rgba(200,0,0,0.2); border-radius: 4px; padding: 0.6rem 0.8rem; color: var(--white); font-family: 'Montserrat', sans-serif; font-size: 0.85rem; outline: none; }
+  .entry-input:focus { border-color: var(--red); }
+  .btn-add-entry { background: rgba(200,0,0,0.2); border: 1px solid rgba(200,0,0,0.4); border-radius: 4px; color: var(--white); padding: 0.6rem 0.9rem; cursor: pointer; font-size: 1rem; transition: background 0.2s; }
+  .btn-add-entry:hover { background: rgba(200,0,0,0.4); }
+  .entries-list { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; min-height: 32px; }
+  .entry-chip { background: rgba(200,0,0,0.12); border: 1px solid rgba(200,0,0,0.3); border-radius: 3px; padding: 0.3rem 0.8rem; font-size: 0.78rem; color: var(--white); display: flex; align-items: center; gap: 0.4rem; }
+  .chip-remove { cursor: pointer; color: rgba(245,240,240,0.4); font-size: 0.9rem; transition: color 0.2s; }
+  .chip-remove:hover { color: var(--red); }
+  .sorteo-result { text-align: center; padding: 1.5rem; background: rgba(200,0,0,0.05); border: 1px solid rgba(200,0,0,0.15); border-radius: 6px; margin-bottom: 1rem; min-height: 80px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 0.3rem; }
+  .result-label { font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(245,240,240,0.4); }
+  .result-name { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--red-bright); animation: winner-pop 0.5s cubic-bezier(.16,1,.3,1) both; }
+  @keyframes winner-pop { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .btn-spin { width: 100%; background: var(--red); color: var(--white); border: none; border-radius: 4px; padding: 0.9rem; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.25s; }
+  .btn-spin:hover:not(:disabled) { background: var(--red-bright); box-shadow: 0 6px 20px rgba(200,0,0,0.4); }
+  .btn-spin:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* TRIVIA */
+  .trivia-question { font-size: 1.05rem; font-weight: 600; color: var(--white); margin-bottom: 1.2rem; line-height: 1.5; }
+  .trivia-options { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1rem; }
+  .trivia-opt { background: var(--gray2); border: 1.5px solid rgba(200,0,0,0.2); border-radius: 4px; padding: 0.8rem 1rem; cursor: pointer; font-size: 0.85rem; color: rgba(245,240,240,0.8); transition: all 0.2s; text-align: left; font-family: 'Montserrat', sans-serif; }
+  .trivia-opt:hover { border-color: var(--red); color: var(--white); background: rgba(200,0,0,0.08); }
+  .trivia-opt.correct { border-color: #00ff88; background: rgba(0,255,136,0.08); color: #00ff88; }
+  .trivia-opt.wrong { border-color: var(--red); background: rgba(200,0,0,0.1); color: var(--red-bright); }
+
+  /* ADMIN LOGIN */
+  .admin-login { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 2000; display: none; align-items: center; justify-content: center; }
+  .admin-login.open { display: flex; }
+  .login-box { background: var(--gray); border: 1px solid rgba(200,0,0,0.4); border-radius: 10px; padding: 2.5rem; width: 100%; max-width: 360px; text-align: center; }
+  .login-logo { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--red); letter-spacing: 3px; margin-bottom: 0.3rem; }
+  .login-sub { font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(245,240,240,0.35); margin-bottom: 2rem; }
+  .login-input { width: 100%; background: var(--gray2); border: 1px solid rgba(200,0,0,0.25); border-radius: 4px; padding: 0.8rem 1rem; color: var(--white); font-family: 'Montserrat', sans-serif; font-size: 0.9rem; outline: none; margin-bottom: 1rem; text-align: center; letter-spacing: 2px; }
+  .login-input:focus { border-color: var(--red); }
+  .login-btn { width: 100%; background: var(--red); color: var(--white); border: none; border-radius: 4px; padding: 0.85rem; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+  .login-btn:hover { background: var(--red-bright); }
+  .login-error { font-size: 0.78rem; color: #ff6666; margin-top: 0.8rem; min-height: 1.2rem; }
+  .login-cancel { margin-top: 1rem; font-size: 0.72rem; color: rgba(245,240,240,0.3); cursor: pointer; transition: color 0.2s; }
+  .login-cancel:hover { color: rgba(245,240,240,0.6); }
+
+  /* ADMIN PANEL */
+  .admin-toggle { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 500; background: rgba(10,10,10,0.9); border: 1px solid rgba(200,0,0,0.4); border-radius: 6px; padding: 0.6rem 1rem; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--red); cursor: pointer; transition: all 0.2s; }
+  .admin-toggle:hover { background: rgba(200,0,0,0.15); }
+
+  .admin-panel { position: fixed; bottom: 4.5rem; right: 1.5rem; z-index: 500; background: rgba(10,10,10,0.97); border: 1px solid rgba(200,0,0,0.4); border-radius: 8px; padding: 1.2rem; width: 260px; display: none; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
+  .admin-panel.open { display: block; }
+  .admin-panel-title { font-size: 0.65rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 1rem; }
+  .admin-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem; }
+  .admin-row span { font-size: 0.78rem; color: rgba(245,240,240,0.7); }
+  .toggle-switch { position: relative; width: 40px; height: 22px; cursor: pointer; }
+  .toggle-switch input { display: none; }
+  .toggle-slider { position: absolute; inset: 0; background: #333; border-radius: 22px; transition: background 0.3s; }
+  .toggle-slider::before { content: ''; position: absolute; width: 16px; height: 16px; background: var(--white); border-radius: 50%; top: 3px; left: 3px; transition: transform 0.3s; }
+  .toggle-switch input:checked + .toggle-slider { background: var(--red); }
+  .toggle-switch input:checked + .toggle-slider::before { transform: translateX(18px); }
+  .admin-stat { background: rgba(200,0,0,0.06); border: 1px solid rgba(200,0,0,0.15); border-radius: 4px; padding: 0.7rem; margin-bottom: 0.6rem; }
+  .admin-stat-label { font-size: 0.62rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(245,240,240,0.35); margin-bottom: 0.2rem; }
+  .admin-stat-value { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--white); letter-spacing: 1px; }
+  .admin-logout { width: 100%; background: transparent; border: 1px solid rgba(200,0,0,0.25); border-radius: 4px; padding: 0.5rem; color: rgba(245,240,240,0.4); font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; margin-top: 0.8rem; transition: all 0.2s; }
+  .admin-logout:hover { border-color: var(--red); color: var(--red); }
+
+  /* CONFETTI */
+  .confetti-piece { position: fixed; width: 8px; height: 8px; border-radius: 1px; top: -10px; pointer-events: none; z-index: 9998; animation: confetti-fall linear forwards; }
+  @keyframes confetti-fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .apply-inner { padding: 0 1rem 1.5rem; }
+    .apply-header { padding: 1.2rem; }
+    .social-btn span { display: none; }
+    .social-btn { padding: 0.75rem; }
+    section { padding: 3.5rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="spotlight spotlight-1"></div>
+  <div class="spotlight spotlight-2"></div>
+  <div class="hero-logo">
+    <div class="logo-ring"><span class="logo-k">K</span></div>
+  </div>
+  <h1 class="hero-title">
+    <span class="kop">KOP</span>
+    <span class="prod">Producciones</span>
+  </h1>
+  <p class="hero-sub">Shows de Roblox de otro nivel</p>
+  <div class="hero-divider"></div>
+  <div class="social-section">
+    <a href="https://discord.gg/ZSdwxGnDNA" target="_blank" class="social-btn social-btn-discord">
+      <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.04.032.052a19.9 19.9 0 0 0 5.993 3.03.077.077 0 0 0 .084-.028 13.87 13.87 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+      <span>Discord</span>
+    </a>
+    <a href="https://www.tiktok.com/@kop_producciones" target="_blank" class="social-btn social-btn-tiktok">
+      <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.37 6.37 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.02a8.22 8.22 0 004.82 1.55V7.12a4.85 4.85 0 01-1.05-.43z"/></svg>
+      <span>TikTok</span>
+    </a>
+    <a href="#" target="_blank" class="social-btn social-btn-instagram">
+      <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      <span>Instagram</span>
+    </a>
+    <a href="#" target="_blank" class="social-btn social-btn-whatsapp">
+      <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span>WhatsApp</span>
+    </a>
+  </div>
+  <div class="scroll-hint">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M7 10L1 4h12z"/></svg>
+    Scroll
+  </div>
+</div>
+
+<div class="separator"></div>
+
+<!-- QUIÉNES SOMOS -->
+<section class="about-section">
+  <p class="section-label">Nuestra historia</p>
+  <h2 class="section-title">Quiénes somos</h2>
+  <div class="section-divider"></div>
+  <p class="about-main">Somos <strong>KOP Producciones</strong>, un equipo apasionado que lleva los shows de Roblox a otro nivel. Creamos experiencias únicas dentro del juego — desde conciertos y eventos en vivo hasta producciones que dejan sin palabras.<br><br>No llegaste aquí por casualidad. Nuestra comunidad crece cada día y los mejores shows están por venir. 💥</p>
+  <div class="about-grid">
+    <div class="about-card"><div class="card-number">01</div><div class="card-title">Shows en vivo</div><p class="card-text">Producimos eventos dentro de Roblox con efectos, coreografías y una puesta en escena que nadie más ofrece.</p></div>
+    <div class="about-card"><div class="card-number">02</div><div class="card-title">Comunidad activa</div><p class="card-text">Más de 6.500 seguidores y 62K me gustas avalan nuestro trabajo. Una familia que sigue creciendo.</p></div>
+    <div class="about-card"><div class="card-number">03</div><div class="card-title">Contenido épico</div><p class="card-text">Desde Michael Jackson hasta shows originales — siempre buscamos superarnos con cada producción.</p></div>
+    <div class="about-card"><div class="card-number">04</div><div class="card-title">Equipo dedicado</div><p class="card-text">Detrás de cada show hay personas que ponen todo su esfuerzo para darte la mejor experiencia posible.</p></div>
+  </div>
+</section>
+
+<div class="separator"></div>
+
+<!-- POSTULACIONES -->
+<section>
+  <p class="section-label">Sumate al equipo</p>
+  <h2 class="section-title">Postulaciones</h2>
+  <div class="section-divider"></div>
+  <div class="apply-wrapper">
+    <div class="apply-header open" id="applyHeader" onclick="toggleApply()">
+      <div class="apply-header-left">
+        <div class="apply-status status-open" id="applyStatus">
+          <div class="status-dot"></div>
+          <span id="applyStatusText">Postulaciones abiertas</span>
+        </div>
+      </div>
+      <div class="apply-toggle-icon" id="applyToggleIcon">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M6 8L1 3h10z"/></svg>
+      </div>
+    </div>
+    <div class="apply-content open" id="applyContent">
+      <div class="apply-inner">
+        <div id="applyFormContent">
+          <p class="apply-text">¿Querés formar parte del equipo de KOP Producciones? Completá el formulario y nos ponemos en contacto.</p>
+          <div class="roles-grid">
+            <div class="role-tag"><div class="role-dot"></div>Productor/a</div>
+            <div class="role-tag"><div class="role-dot"></div>Editor/a de video</div>
+            <div class="role-tag"><div class="role-dot"></div>Diseñador/a</div>
+            <div class="role-tag"><div class="role-dot"></div>Actor/Actriz Roblox</div>
+            <div class="role-tag"><div class="role-dot"></div>Community Manager</div>
+            <div class="role-tag"><div class="role-dot"></div>Moderador/a</div>
+          </div>
+          <div class="apply-form">
+            <div class="form-row">
+              <div class="form-group"><label>Usuario de Roblox</label><input type="text" id="f-roblox" placeholder="Tu username"></div>
+              <div class="form-group"><label>Discord</label><input type="text" id="f-discord" placeholder="usuario#0000"></div>
+            </div>
+            <div class="form-group"><label>Rol al que aplicás</label>
+              <select id="f-role">
+                <option value="">— Seleccioná un rol —</option>
+                <option>Productor/a</option><option>Editor/a de video</option><option>Diseñador/a</option>
+                <option>Actor/Actriz Roblox</option><option>Community Manager</option><option>Moderador/a</option>
+              </select>
+            </div>
+            <div class="form-group"><label>¿Por qué querés unirte?</label><textarea id="f-motivation" placeholder="Contanos sobre vos..."></textarea></div>
+            <div class="form-group"><label>Experiencia previa (opcional)</label><textarea id="f-experience" placeholder="Links, proyectos anteriores..." style="min-height:60px"></textarea></div>
+            <button class="btn-submit" id="submitBtn" onclick="submitApplication()">Enviar postulación</button>
+            <div id="formMsg"></div>
+          </div>
+        </div>
+        <div id="applyClosedMsg" class="closed-msg" style="display:none">Las postulaciones están cerradas. ¡Seguí nuestras redes para cuando abran!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="separator"></div>
+
+<!-- ACTIVIDADES -->
+<section>
+  <p class="section-label">Participá</p>
+  <h2 class="section-title">Actividades</h2>
+  <div class="section-divider"></div>
+  <div class="activity-tabs">
+    <button class="tab-btn active" onclick="filterActivity('all',this)">Todas</button>
+    <button class="tab-btn" onclick="filterActivity('sorteo',this)">Sorteos</button>
+    <button class="tab-btn" onclick="filterActivity('dinamica',this)">Dinámicas</button>
+    <button class="tab-btn" onclick="filterActivity('evento',this)">Eventos</button>
+  </div>
+  <div class="activity-cards">
+    <div class="activity-card visible" data-type="sorteo">
+      <div class="activity-card-top"><div class="activity-type">Sorteo</div><div class="activity-name">Sorteo de Robux</div><span class="activity-badge badge-active">Activo</span></div>
+      <div class="activity-card-bottom"><div><div class="activity-desc">Entrá a nuestro Discord, seguinos y etiquetá a un amigo para participar. ¡Premio en Robux!</div><span class="activity-action" onclick="openSorteo()">Realizar sorteo →</span></div></div>
+    </div>
+    <div class="activity-card visible" data-type="dinamica">
+      <div class="activity-card-top"><div class="activity-type">Dinámica</div><div class="activity-name">Trivia KOP</div><span class="activity-badge badge-active">Activo</span></div>
+      <div class="activity-card-bottom"><div><div class="activity-desc">¿Cuánto sabés de KOP Producciones? Poné a prueba tu conocimiento.</div><span class="activity-action" onclick="openTrivia()">Jugar ahora →</span></div></div>
+    </div>
+    <div class="activity-card visible" data-type="evento">
+      <div class="activity-card-top"><div class="activity-type">Evento</div><div class="activity-name">Próximo Show</div><span class="activity-badge badge-soon">Próximamente</span></div>
+      <div class="activity-card-bottom"><div><div class="activity-desc">Estamos preparando algo enorme. Seguí nuestras redes para no perderte la fecha.</div><a href="https://discord.gg/ZSdwxGnDNA" target="_blank" class="activity-action">Ir al Discord →</a></div></div>
+    </div>
+  </div>
+</section>
+
+<footer style="border-top:1px solid rgba(200,0,0,0.15);padding:3rem 1.5rem;text-align:center;color:rgba(245,240,240,0.25);font-size:0.75rem;letter-spacing:1px;">
+  <span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--red)">KOP Producciones</span><br><br>
+  Nos vemos en el show. 🎭<br><br>
+  © 2025 KOP Producciones — Todos los derechos reservados
+</footer>
+
+<!-- MODAL SORTEO -->
+<div class="modal-overlay" id="sorteoModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('sorteoModal')">✕</button>
+    <div class="modal-title">Sorteo</div>
+    <p class="modal-sub">Agregá los participantes y sorteá el ganador.</p>
+    <div class="entry-input-row">
+      <input type="text" class="entry-input" id="entryInput" placeholder="Nombre del participante" onkeydown="if(event.key==='Enter')addEntry()">
+      <button class="btn-add-entry" onclick="addEntry()">+</button>
+    </div>
+    <div class="entries-list" id="entriesList"></div>
+    <div class="sorteo-result" id="sorteoResult"><span class="result-label">El ganador será...</span></div>
+    <button class="btn-spin" id="spinBtn" onclick="doSorteo()">🎲 Sortear</button>
+  </div>
+</div>
+
+<!-- MODAL TRIVIA -->
+<div class="modal-overlay" id="triviaModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('triviaModal')">✕</button>
+    <div class="modal-title">Trivia KOP</div>
+    <p class="modal-sub" id="triviaProgress">Pregunta 1 de 5</p>
+    <div class="trivia-question" id="triviaQ"></div>
+    <div class="trivia-options" id="triviaOpts"></div>
+    <div id="triviaFeedback" style="font-size:0.82rem;color:rgba(245,240,240,0.5);min-height:1.5rem;margin-bottom:0.8rem;"></div>
+    <button class="btn-spin" id="nextTriviaBtn" style="display:none" onclick="nextTrivia()">Siguiente →</button>
+    <div id="triviaScore" style="display:none;text-align:center;padding:1rem;">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--red-bright)" id="scoreDisplay"></div>
+      <div style="font-size:0.85rem;color:rgba(245,240,240,0.55);margin-top:0.3rem">¡Gracias por jugar!</div>
+      <button class="btn-spin" style="margin-top:1rem" onclick="restartTrivia()">Jugar de nuevo</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div class="admin-login" id="adminLogin">
+  <div class="login-box">
+    <div class="login-logo">KOP ADMIN</div>
+    <div class="login-sub">Panel de control</div>
+    <input type="password" class="login-input" id="loginPassword" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Ingresar</button>
+    <div class="login-error" id="loginError"></div>
+    <div class="login-cancel" onclick="closeLogin()">Cancelar</div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<button class="admin-toggle" onclick="openAdmin()">⚙ Admin</button>
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-panel-title">⚙ Panel KOP</div>
+  <div class="admin-stat"><div class="admin-stat-label">Visitas (7 días)</div><div class="admin-stat-value" id="statVisits">—</div></div>
+  <div class="admin-stat"><div class="admin-stat-label">Postulaciones pendientes</div><div class="admin-stat-value" id="statApps">—</div></div>
+  <div class="admin-stat"><div class="admin-stat-label">Sorteos realizados</div><div class="admin-stat-value" id="statRaffles">—</div></div>
+  <div class="admin-stat"><div class="admin-stat-label">Trivia — prom. aciertos</div><div class="admin-stat-value" id="statTrivia">—</div></div>
+  <div class="admin-row" style="margin-top:1rem">
+    <span>Postulaciones</span>
+    <label class="toggle-switch">
+      <input type="checkbox" id="applyToggle" checked onchange="toggleApplications()">
+      <div class="toggle-slider"></div>
+    </label>
+  </div>
+  <button class="admin-logout" onclick="doLogout()">Cerrar sesión</button>
+</div>
+
+<script>
+const API = '';  // mismo origen — el backend sirve el frontend
+
+// ── VISITA ──
+fetch(`${API}/api/visit`, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ page: '/', referrer: document.referrer })
+}).catch(() => {});
+
+// ── ESTADO POSTULACIONES ──
+async function checkApplyStatus() {
+  try {
+    const r = await fetch(`${API}/api/applications/status`);
+    const { open } = await r.json();
+    setApplyUI(open);
+  } catch {}
+}
+checkApplyStatus();
+
+// ── APPLY TOGGLE (UI) ──
+let applyOpen = true;
+function toggleApply() {
+  applyOpen = !applyOpen;
+  document.getElementById('applyContent').classList.toggle('open', applyOpen);
+  document.getElementById('applyHeader').classList.toggle('open', applyOpen);
+}
+
+function setApplyUI(open) {
+  const status = document.getElementById('applyStatus');
+  const statusText = document.getElementById('applyStatusText');
+  const formContent = document.getElementById('applyFormContent');
+  const closedMsg = document.getElementById('applyClosedMsg');
+  if (open) {
+    status.className = 'apply-status status-open';
+    statusText.textContent = 'Postulaciones abiertas';
+    formContent.style.display = 'block';
+    closedMsg.style.display = 'none';
+  } else {
+    status.className = 'apply-status status-closed';
+    statusText.textContent = 'Postulaciones cerradas';
+    formContent.style.display = 'none';
+    closedMsg.style.display = 'block';
+    if (!applyOpen) { applyOpen = true; document.getElementById('applyContent').classList.add('open'); document.getElementById('applyHeader').classList.add('open'); }
+  }
+}
+
+// ── ENVIAR POSTULACIÓN ──
+async function submitApplication() {
+  const roblox = document.getElementById('f-roblox').value.trim();
+  const discord = document.getElementById('f-discord').value.trim();
+  const role = document.getElementById('f-role').value;
+  const motivation = document.getElementById('f-motivation').value.trim();
+  const experience = document.getElementById('f-experience').value.trim();
+  const btn = document.getElementById('submitBtn');
+  const msg = document.getElementById('formMsg');
+
+  if (!roblox || !discord || !role) {
+    msg.innerHTML = '<div class="form-msg error">Completá los campos obligatorios.</div>';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  try {
+    const r = await fetch(`${API}/api/applications`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ roblox_user: roblox, discord, role, motivation, experience })
+    });
+    const data = await r.json();
+    if (r.ok) {
+      msg.innerHTML = '<div class="form-msg success">✓ ¡Postulación enviada! Te contactamos pronto.</div>';
+      ['f-roblox','f-discord','f-motivation','f-experience'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('f-role').value = '';
+    } else {
+      msg.innerHTML = `<div class="form-msg error">${data.error || 'Error al enviar.'}</div>`;
+    }
+  } catch {
+    msg.innerHTML = '<div class="form-msg error">Error de conexión. Intentá de nuevo.</div>';
+  }
+  btn.disabled = false;
+  btn.textContent = 'Enviar postulación';
+}
+
+// ── ACTIVITY FILTER ──
+function filterActivity(type, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.activity-card').forEach(card => {
+    card.classList.toggle('visible', type === 'all' || card.dataset.type === type);
+  });
+}
+
+// ── MODALS ──
+function openSorteo() { document.getElementById('sorteoModal').classList.add('open'); }
+function openTrivia() { document.getElementById('triviaModal').classList.add('open'); loadTrivia(); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(m => m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); }));
+
+// ── SORTEO ──
+let entries = [];
+function addEntry() {
+  const input = document.getElementById('entryInput');
+  const val = input.value.trim();
+  if (!val) return;
+  entries.push(val);
+  renderEntries();
+  input.value = '';
+  input.focus();
+}
+function removeEntry(i) { entries.splice(i, 1); renderEntries(); }
+function renderEntries() {
+  document.getElementById('entriesList').innerHTML = entries.map((e, i) =>
+    `<div class="entry-chip">${e}<span class="chip-remove" onclick="removeEntry(${i})">×</span></div>`
+  ).join('');
+}
+async function doSorteo() {
+  if (entries.length < 2) { alert('Agregá al menos 2 participantes'); return; }
+  const btn = document.getElementById('spinBtn');
+  const result = document.getElementById('sorteoResult');
+  btn.disabled = true;
+  let count = 0;
+  const winner = entries[Math.floor(Math.random() * entries.length)];
+  const interval = setInterval(() => {
+    const r = entries[Math.floor(Math.random() * entries.length)];
+    result.innerHTML = `<span class="result-label">Sorteando...</span><div class="result-name">${r}</div>`;
+    count++;
+    if (count > 15) {
+      clearInterval(interval);
+      result.innerHTML = `<span class="result-label">🏆 ¡Ganador!</span><div class="result-name">${winner}</div>`;
+      btn.disabled = false;
+      btn.textContent = '🎲 Sortear de nuevo';
+      launchConfetti();
+      fetch(`${API}/api/raffle`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ participants: entries, winner }) }).catch(() => {});
+    }
+  }, 80);
+}
+function launchConfetti() {
+  const colors = ['#CC0000','#FF3333','#ffffff','#FF6666','#ffaaaa'];
+  for (let i = 0; i < 60; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.cssText = `left:${Math.random()*100}vw;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${1.5+Math.random()*2}s;animation-delay:${Math.random()*0.5}s`;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4000);
+  }
+}
+
+// ── TRIVIA ──
+const triviaData = [
+  { q: '¿Cuál es el eslogan de KOP Producciones?', opts: ['Roblox al máximo','No llegaste aquí por casualidad','El show debe continuar','Somos los mejores'], ans: 1 },
+  { q: '¿En qué plataforma se realizan los shows de KOP?', opts: ['Minecraft','Fortnite','Roblox','GTA V'], ans: 2 },
+  { q: '¿Cuál fue uno de los shows más populares de KOP?', opts: ['Concierto de Shakira','Michael Jackson en Roblox','Bad Bunny en Roblox','Daddy Yankee en Roblox'], ans: 1 },
+  { q: '¿Cuántos me gustas superaron en TikTok?', opts: ['10K','30K','62K','100K'], ans: 2 },
+  { q: '¿Cuál es la red más importante de la comunidad KOP?', opts: ['Instagram','TikTok','WhatsApp','Discord'], ans: 3 },
+];
+let triviaIndex = 0, triviaScore = 0, triviaAnswered = false;
+function loadTrivia() { triviaIndex = 0; triviaScore = 0; renderTrivia(); document.getElementById('triviaScore').style.display = 'none'; document.getElementById('triviaQ').style.display = 'block'; document.getElementById('triviaOpts').style.display = 'flex'; }
+function renderTrivia() {
+  triviaAnswered = false;
+  const q = triviaData[triviaIndex];
+  document.getElementById('triviaProgress').textContent = `Pregunta ${triviaIndex+1} de ${triviaData.length}`;
+  document.getElementById('triviaQ').textContent = q.q;
+  document.getElementById('triviaFeedback').textContent = '';
+  document.getElementById('nextTriviaBtn').style.display = 'none';
+  document.getElementById('triviaOpts').innerHTML = q.opts.map((o, i) => `<button class="trivia-opt" onclick="answerTrivia(${i})">${o}</button>`).join('');
+}
+function answerTrivia(i) {
+  if (triviaAnswered) return;
+  triviaAnswered = true;
+  const q = triviaData[triviaIndex];
+  const opts = document.querySelectorAll('.trivia-opt');
+  opts[q.ans].classList.add('correct');
+  if (i !== q.ans) { opts[i].classList.add('wrong'); document.getElementById('triviaFeedback').textContent = '❌ Incorrecto'; }
+  else { triviaScore++; document.getElementById('triviaFeedback').textContent = '✅ ¡Correcto!'; }
+  document.getElementById('nextTriviaBtn').style.display = 'block';
+}
+function nextTrivia() {
+  triviaIndex++;
+  if (triviaIndex >= triviaData.length) {
+    document.getElementById('triviaQ').style.display = 'none';
+    document.getElementById('triviaOpts').style.display = 'none';
+    document.getElementById('triviaFeedback').textContent = '';
+    document.getElementById('nextTriviaBtn').style.display = 'none';
+    document.getElementById('triviaScore').style.display = 'block';
+    document.getElementById('scoreDisplay').textContent = `${triviaScore}/${triviaData.length}`;
+    document.getElementById('triviaProgress').textContent = '¡Completada!';
+    fetch(`${API}/api/trivia`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ score: triviaScore, total: triviaData.length }) }).catch(() => {});
+  } else { renderTrivia(); }
+}
+function restartTrivia() { loadTrivia(); document.getElementById('triviaScore').style.display = 'none'; document.getElementById('triviaQ').style.display = 'block'; document.getElementById('triviaOpts').style.display = 'flex'; }
+
+// ── ADMIN AUTH ──
+let adminToken = sessionStorage.getItem('kop_admin_token');
+function openAdmin() {
+  if (adminToken) { showAdminPanel(); }
+  else { document.getElementById('adminLogin').classList.add('open'); document.getElementById('loginPassword').focus(); }
+}
+function closeLogin() { document.getElementById('adminLogin').classList.remove('open'); document.getElementById('loginError').textContent = ''; document.getElementById('loginPassword').value = ''; }
+async function doLogin() {
+  const pass = document.getElementById('loginPassword').value;
+  const err = document.getElementById('loginError');
+  err.textContent = '';
+  try {
+    const r = await fetch(`${API}/api/admin/login`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: pass }) });
+    const data = await r.json();
+    if (r.ok) {
+      adminToken = data.token;
+      sessionStorage.setItem('kop_admin_token', adminToken);
+      closeLogin();
+      showAdminPanel();
+    } else {
+      err.textContent = data.error || 'Contraseña incorrecta';
+      document.getElementById('loginPassword').value = '';
+    }
+  } catch { err.textContent = 'Error de conexión'; }
+}
+function doLogout() { adminToken = null; sessionStorage.removeItem('kop_admin_token'); document.getElementById('adminPanel').classList.remove('open'); }
+
+async function showAdminPanel() {
+  document.getElementById('adminPanel').classList.add('open');
+  try {
+    const r = await fetch(`${API}/api/admin/analytics`, { headers: { Authorization: `Bearer ${adminToken}` } });
+    if (r.status === 401) { doLogout(); return; }
+    const { summary, settings } = await r.json();
+    document.getElementById('statVisits').textContent = summary.visits7d ?? '—';
+    document.getElementById('statApps').textContent = summary.pendingApplications ?? '—';
+    document.getElementById('statRaffles').textContent = summary.totalRaffles ?? '—';
+    document.getElementById('statTrivia').textContent = summary.triviaAvgScore ?? '—';
+    // sync toggle
+    const settingR = await fetch(`${API}/api/admin/settings`, { headers: { Authorization: `Bearer ${adminToken}` } });
+    const settingData = await settingR.json();
+    document.getElementById('applyToggle').checked = settingData.applicationsOpen;
+  } catch {}
+}
+
+async function toggleApplications() {
+  const open = document.getElementById('applyToggle').checked;
+  try {
+    await fetch(`${API}/api/admin/settings`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${adminToken}` }, body: JSON.stringify({ applicationsOpen: open }) });
+    setApplyUI(open);
+  } catch {}
+}
+</script>
+</body>
+</html>
