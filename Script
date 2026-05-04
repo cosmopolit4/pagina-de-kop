@@ -1,0 +1,1 @@
+mkdir -p /home/claude/kop-producciones/{public,routes,middleware} && echo "done"
