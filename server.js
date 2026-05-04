@@ -13,18 +13,15 @@ const PORT = process.env.PORT || 3000;
 // ── TRUST PROXY (Railway) ──
 app.set('trust proxy', 1);
 
+// ── CSP PERMISIVO (permite inline scripts) ──
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'");
+  next();
+});
+
 // ── SEGURIDAD ──
 app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "fonts.googleapis.com"],
-      styleSrc: ["'self'", "'unsafe-inline'", "fonts.googleapis.com", "fonts.gstatic.com"],
-      fontSrc: ["'self'", "fonts.gstatic.com"],
-      imgSrc: ["'self'", "data:", "https:"],
-      connectSrc: ["'self'"]
-    }
-  }
+  contentSecurityPolicy: false
 }));
 
 app.use(cors({
